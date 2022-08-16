@@ -1,27 +1,38 @@
 """The browsers implementation."""
 
 from abc import ABC
+from sqlite3 import NotSupportedError
 from selenium import webdriver
 
 
 class BaseBrowser(ABC):
-    def __init__(self, driver, maximized=False):
+    def __init__(self, driver, maximized=False, headless=False, slowRun=False):
         """
         Initializes a new BaseBrowser instance.
 
         :param driver: The selenium webdriver connection.
         :param maximized: If to maximize the browser window (default False).
+        :param headless: If to hide the browser window (default False).
+        :param slowRun: If to execute the commands with delay (default False).
         """
 
         self.driver = driver
         self.maximized = maximized
+        self.headless = headless
+        self.slowRun = slowRun
+
+    def check_slow_run(self):
+        if self.slowRun:
+            from time import sleep
+
+            sleep(2)
 
     def setup_driver(self):
         """
         Setups and configures the webdriver.
         """
 
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(10)
 
         if self.maximized:
             self.driver.maximize_window()
@@ -69,6 +80,8 @@ class BaseBrowser(ABC):
         :param text: The text to write.
         """
 
+        self.check_slow_run()
+
         element = self.find_element(locator)
         element.send_keys(text)
 
@@ -78,6 +91,8 @@ class BaseBrowser(ABC):
 
         :param locator: The locator of the web element.
         """
+
+        self.check_slow_run()
 
         element = self.find_element(locator)
 
@@ -93,6 +108,8 @@ class BaseBrowser(ABC):
         :param locator: The locator of the web element.
         """
 
+        self.check_slow_run()
+
         element = self.find_element(locator)
         element.click()
 
@@ -106,6 +123,8 @@ class BaseBrowser(ABC):
 
         from selenium.webdriver.support.select import Select
 
+        self.check_slow_run()
+
         sel = Select(self.driver.find_element(*locator))
         sel.select_by_visible_text(value)
 
@@ -118,15 +137,64 @@ class BaseBrowser(ABC):
 
 
 class SafariBrowser(BaseBrowser):
-    def __init__(self, maximized=False):
+    def __init__(self, maximized=False, headless=False, slowRun=False):
         """
         Initializes a new SafariBrowser instance.
 
+        :param driver: The selenium webdriver connection.
         :param maximized: If to maximize the browser window (default False).
+        :param headless: If to hide the browser window (default False).
+        :param slowRun: If to execute the commands with delay (default False).
         """
 
-        self.driver = webdriver.Safari()
+        self.maximized = maximized
+        self.headless = headless
+        self.slowRun = slowRun
 
-        BaseBrowser.__init__(self, self.driver, maximized)
+        if self.headless:
+            raise NotSupportedError(
+                'Headless mode currently not supported in Safari')
+        else:
+            self.driver = webdriver.Safari()
+
+        BaseBrowser.__init__(self, self.driver, maximized, headless, slowRun)
+
+        self.setup_driver()
+
+    def setup_driver(self):
+        """
+        Setups and configures the webdriver.
+        """
+
+        BaseBrowser.setup_driver(self)
+
+
+class FirefoxBrowser(BaseBrowser):
+    def __init__(self, maximized=False, headless=False, slowRun=False):
+        """
+        Initializes a new FirefoxBrowser instance.
+
+        :param driver: The selenium webdriver connection.
+        :param maximized: If to maximize the browser window (default False).
+        :param headless: If to hide the browser window (default False).
+        :param slowRun: If to execute the commands with delay (default False).
+        """
+
+        self.maximized = maximized
+        self.headless = headless
+        self.slowRun = slowRun
+
+        if self.headless:
+            from selenium.webdriver.firefox.options import Options as FirefoxOptions
+
+            options = FirefoxOptions()
+            options.add_argument("--headless")
+            self.driver = webdriver.Firefox(
+                options=options, executable_path='/usr/local/bin/geckodriver')
+        else:
+            self.driver = webdriver.Firefox(
+                executable_path='/usr/local/bin/geckodriver')
+
+        BaseBrowser.__init__(self, self.driver, maximized, headless, slowRun)
 
         self.setup_driver()
