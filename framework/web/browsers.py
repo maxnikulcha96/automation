@@ -45,6 +45,7 @@ class BaseBrowser(ABC):
         """
 
         self.driver.get(url)
+        print("Loaded url: {}".format(url))
 
     def find_element(self, locator):
         """
