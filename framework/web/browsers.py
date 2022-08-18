@@ -129,6 +129,17 @@ class BaseBrowser(ABC):
         sel = Select(self.driver.find_element(*locator))
         sel.select_by_visible_text(value)
 
+    def take_screenshot(self, filename):
+        """
+        Takes a screenshot of the browser content.
+
+        :param filename: The name of the screenshot file.
+        """
+
+        self.driver.save_screenshot(filename)
+
+        print("Screenshot saved into: {}".format(filename))
+
     def close(self):
         """
         Closes the web browser.
