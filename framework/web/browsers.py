@@ -25,7 +25,7 @@ class BaseBrowser(ABC):
         if self.slowRun:
             from time import sleep
 
-            sleep(2)
+            sleep(5)
 
     def setup_driver(self):
         """
