@@ -140,6 +140,17 @@ class BaseBrowser(ABC):
 
         print("Screenshot saved into: {}".format(filename))
 
+    def execute_script(self, script):
+        """
+        Executes a JavaScript code on the browser.
+
+        :param script: The script to execute.
+        """
+
+        self.driver.driver.execute_script(script)
+        
+        print("Executed script: {}".format(script))
+
     def close(self):
         """
         Closes the web browser.

@@ -29,8 +29,8 @@ def main():
 
     status = page.get_result_status()
 
-    browser.take_screenshot("{0}_OAM-{1}_{2}_{3}_{4}_{5}.png".format(
-        person_name, application_number, application_type, application_year, status, datetime.now()))
+    # browser.take_screenshot("{0}_OAM-{1}_{2}_{3}_{4}_{5}.png".format(
+    #     person_name, application_number, application_type, application_year, status, datetime.now()))
 
     print("{0}, the status of your application 'OAM-{1}/{2}-{3}' is '{4}'".format(
         person_name, application_number, application_type, application_year, status))
