@@ -8,25 +8,25 @@ from framework.checkers.checkers import BaseWebsiteChecker
 
 def main():
     browser = FirefoxBrowser()
-    page = MigdalPensionPlan(browser)
-    checker = BaseWebsiteChecker(page)
+    website = MigdalPensionPlan(browser)
+    checker = BaseWebsiteChecker(website)
 
-    page.load()
+    website.load()
 
     checker.check_title("כניסה למגדל שלי")
 
     israel_id = str(sys.argv[1])
-    page.fill_israel_id(israel_id)
-    page.click_submit_button()
+    website.fill_israel_id(israel_id)
+    website.click_submit_button()
 
     code = input("Enter code:")
-    page.fill_code(code)
-    page.click_submit_button()
+    website.fill_code(code)
+    website.click_submit_button()
 
-    amount = page.get_pension_amount()
+    amount = website.get_pension_amount()
     print("The pension amount is :{0}".format(amount))
 
-    page.logout()
+    website.logout()
 
     print("------------------------------------------------")
 

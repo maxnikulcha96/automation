@@ -7,13 +7,13 @@ from framework.websites.georgeExchangeRate import GeorgeExchangeRate
 
 def main():
     browser = FirefoxBrowser()
-    page = GeorgeExchangeRate(browser)
+    website = GeorgeExchangeRate(browser)
 
-    page.load()
+    website.load()
 
-    page.accept_only_essential_cookies()
+    website.accept_only_essential_cookies()
 
-    exchange_rate = page.get_today_exchange_rate()
+    exchange_rate = website.get_today_exchange_rate()
 
     today = datetime.today().strftime('%Y-%m-%d')
     print("The EUR/CZK exchange rate on {0} is :{1}"
