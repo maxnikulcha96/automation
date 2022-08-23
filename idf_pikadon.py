@@ -7,7 +7,7 @@ from framework.checkers.checkers import BaseWebsiteChecker
 
 
 def main():
-    browser = FirefoxBrowser(headless=True, slowRun=True)
+    browser = FirefoxBrowser()
     page = IDFPikadon(browser)
     checker = BaseWebsiteChecker(page)
 

@@ -6,7 +6,7 @@ from framework.websites.georgeExchangeRate import GeorgeExchangeRate
 
 
 def main():
-    browser = FirefoxBrowser(headless=True, slowRun=True)
+    browser = FirefoxBrowser()
     page = GeorgeExchangeRate(browser)
 
     page.load()

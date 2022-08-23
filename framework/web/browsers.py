@@ -6,14 +6,14 @@ from selenium import webdriver
 
 
 class BaseBrowser(ABC):
-    def __init__(self, driver, maximized=False, headless=False, slowRun=False):
+    def __init__(self, driver, maximized=False, headless=True, slowRun=True):
         """
         Initializes a new BaseBrowser instance.
 
         :param driver: The selenium webdriver connection.
         :param maximized: If to maximize the browser window (default False).
-        :param headless: If to hide the browser window (default False).
-        :param slowRun: If to execute the commands with delay (default False).
+        :param headless: If to hide the browser window (default True).
+        :param slowRun: If to execute the commands with delay (default True).
         """
 
         self.driver = driver
@@ -160,14 +160,14 @@ class BaseBrowser(ABC):
 
 
 class SafariBrowser(BaseBrowser):
-    def __init__(self, maximized=False, headless=False, slowRun=False):
+    def __init__(self, maximized=False, headless=True, slowRun=True):
         """
         Initializes a new SafariBrowser instance.
 
         :param driver: The selenium webdriver connection.
         :param maximized: If to maximize the browser window (default False).
-        :param headless: If to hide the browser window (default False).
-        :param slowRun: If to execute the commands with delay (default False).
+        :param headless: If to hide the browser window (default True).
+        :param slowRun: If to execute the commands with delay (default True).
         """
 
         self.maximized = maximized
@@ -193,14 +193,14 @@ class SafariBrowser(BaseBrowser):
 
 
 class FirefoxBrowser(BaseBrowser):
-    def __init__(self, maximized=False, headless=False, slowRun=False):
+    def __init__(self, maximized=False, headless=True, slowRun=True):
         """
         Initializes a new FirefoxBrowser instance.
 
         :param driver: The selenium webdriver connection.
         :param maximized: If to maximize the browser window (default False).
-        :param headless: If to hide the browser window (default False).
-        :param slowRun: If to execute the commands with delay (default False).
+        :param headless: If to hide the browser window (default True).
+        :param slowRun: If to execute the commands with delay (default True).
         """
 
         self.maximized = maximized

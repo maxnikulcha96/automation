@@ -1,14 +1,14 @@
 #!/usr/bin/python
 
 import sys
-from datetime import datetime
+# from datetime import datetime
 from framework.checkers.checkers import BaseWebsiteChecker
 from framework.web.browsers import FirefoxBrowser
 from framework.websites.moiApplicationStatus import MoiApplicationStatus
 
 
 def main():
-    browser = FirefoxBrowser(headless=True, slowRun=True)
+    browser = FirefoxBrowser()
     page = MoiApplicationStatus(browser)
     checker = BaseWebsiteChecker(page)
 
