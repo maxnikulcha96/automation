@@ -52,3 +52,6 @@ class IDFPikadon(Website):
 
     def get_pikadon_amount(self):
         return self.browser.get_element_text(self.locators["pikadon_amount_div"])
+
+    def logout(self):
+        super().logout()

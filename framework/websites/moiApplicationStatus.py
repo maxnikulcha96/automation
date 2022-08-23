@@ -42,3 +42,6 @@ class MoiApplicationStatus(Website):
 
     def get_result_status(self):
         return self.browser.get_element_text(self.locators["result_status_span"])
+
+    def logout(self):
+        super().logout()

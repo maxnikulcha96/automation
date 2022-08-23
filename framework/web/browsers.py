@@ -45,7 +45,8 @@ class BaseBrowser(ABC):
         """
 
         self.driver.get(url)
-        print("Loaded url: {}".format(url))
+
+        print("Loaded url: '{0}'".format(url))
 
     def find_element(self, locator):
         """
@@ -138,7 +139,7 @@ class BaseBrowser(ABC):
 
         self.driver.save_screenshot(filename)
 
-        print("Screenshot saved into: {}".format(filename))
+        print("Screenshot saved into: {0}".format(filename))
 
     def execute_script(self, script):
         """
@@ -148,8 +149,8 @@ class BaseBrowser(ABC):
         """
 
         self.driver.driver.execute_script(script)
-        
-        print("Executed script: {}".format(script))
+
+        print("Executed script: {0}".format(script))
 
     def close(self):
         """

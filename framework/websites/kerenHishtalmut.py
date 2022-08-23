@@ -73,5 +73,6 @@ class KerenHishtalmut(Website):
         return self.browser.get_element_text(self.locators["total_amount_div"])
 
     def logout(self):
+        super().logout()
+
         self.browser.click(self.locators["logout_span"])
-        print("Page logout")

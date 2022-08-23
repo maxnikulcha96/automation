@@ -36,3 +36,6 @@ class GeorgeExchangeRate(Website):
 
     def get_today_exchange_rate(self):
         return self.browser.get_element_text(self.locators["today_exchange_rate_td"])
+
+    def logout(self):
+        super().logout()
