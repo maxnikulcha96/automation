@@ -42,3 +42,4 @@ class MigdalPensionPlan(Website):
 
     def logout(self):
         self.browser.execute_script("authenticatedUser.logout()")
+        print("Page logout")
