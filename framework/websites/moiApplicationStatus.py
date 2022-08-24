@@ -25,15 +25,18 @@ class MoiApplicationStatus(Website):
         }
 
         Website.__init__(self, browser, self.url)
-        
+
     def fill_application_details(self, number, type, year):
-        self.browser.write_text(self.locators["application_number_input"], number)
+        self.browser.write_text(
+            self.locators["application_number_input"], number)
         print("Filled application number: {}".format(number))
 
-        self.browser.select_value_from_dropdown(self.locators["application_type_selectbox"], type)
+        self.browser.select_value_from_dropdown(
+            self.locators["application_type_selectbox"], type)
         print("Choosen application type : {}".format(type))
 
-        self.browser.select_value_from_dropdown(self.locators["application_year"], year)
+        self.browser.select_value_from_dropdown(
+            self.locators["application_year"], year)
         print("Choosen application year : {}".format(year))
 
     def click_submit_button(self):
@@ -42,6 +45,9 @@ class MoiApplicationStatus(Website):
 
     def get_result_status(self):
         return self.browser.get_element_text(self.locators["result_status_span"])
+
+    def login(self):
+        super().login()
 
     def logout(self):
         super().logout()

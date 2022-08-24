@@ -72,6 +72,9 @@ class KerenHishtalmut(Website):
     def get_keren_amount(self):
         return self.browser.get_element_text(self.locators["total_amount_div"])
 
+    def login(self):
+        super().login()
+
     def logout(self):
         super().logout()
 

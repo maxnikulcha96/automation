@@ -30,13 +30,13 @@ class Website(ABC):
 
         return self.browser.get_title()
 
-    # @abc.abstractmethod
-    # def login(self):
-    #     """
-    #     Login the website.
-    #     """
+    @abc.abstractmethod
+    def login(self):
+        """
+        Login the website.
+        """
 
-    #     print("Login website")
+        pass
 
     @abc.abstractmethod
     def logout(self):
@@ -44,4 +44,4 @@ class Website(ABC):
         Logout the website.
         """
 
-        print("Logout website")
+        pass

@@ -6,7 +6,7 @@ from selenium import webdriver
 
 
 class BaseBrowser(ABC):
-    def __init__(self, driver, maximized=False, headless=True, slowRun=True):
+    def __init__(self, driver, maximized=False, headless=True, slowRun=True, timeout=5):
         """
         Initializes a new BaseBrowser instance.
 
@@ -14,18 +14,20 @@ class BaseBrowser(ABC):
         :param maximized: If to maximize the browser window (default False).
         :param headless: If to hide the browser window (default True).
         :param slowRun: If to execute the commands with delay (default True).
+        :param timeout: The timeout between each command (default 5 sec).
         """
 
         self.driver = driver
         self.maximized = maximized
         self.headless = headless
         self.slowRun = slowRun
+        self.timeout = timeout
 
     def check_slow_run(self):
         if self.slowRun:
             from time import sleep
 
-            sleep(5)
+            sleep(self.timeout)
 
     def setup_driver(self):
         """
@@ -157,11 +159,11 @@ class BaseBrowser(ABC):
         Closes the web browser.
         """
 
-        self.driver.close()
+        self.driver.quit()
 
 
 class SafariBrowser(BaseBrowser):
-    def __init__(self, maximized=False, headless=True, slowRun=True):
+    def __init__(self, maximized=False, headless=True, slowRun=True, timeout=5):
         """
         Initializes a new SafariBrowser instance.
 
@@ -169,11 +171,13 @@ class SafariBrowser(BaseBrowser):
         :param maximized: If to maximize the browser window (default False).
         :param headless: If to hide the browser window (default True).
         :param slowRun: If to execute the commands with delay (default True).
+        :param timeout: The timeout between each command (default 5 sec).
         """
 
         self.maximized = maximized
         self.headless = headless
         self.slowRun = slowRun
+        self.timeout = timeout
 
         if self.headless:
             raise NotSupportedError(
@@ -181,7 +185,8 @@ class SafariBrowser(BaseBrowser):
         else:
             self.driver = webdriver.Safari()
 
-        BaseBrowser.__init__(self, self.driver, maximized, headless, slowRun)
+        BaseBrowser.__init__(self, self.driver, maximized,
+                             headless, slowRun, timeout)
 
         self.setup_driver()
 
@@ -194,7 +199,7 @@ class SafariBrowser(BaseBrowser):
 
 
 class FirefoxBrowser(BaseBrowser):
-    def __init__(self, maximized=False, headless=True, slowRun=True):
+    def __init__(self, maximized=False, headless=True, slowRun=True, timeout=5):
         """
         Initializes a new FirefoxBrowser instance.
 
@@ -202,11 +207,13 @@ class FirefoxBrowser(BaseBrowser):
         :param maximized: If to maximize the browser window (default False).
         :param headless: If to hide the browser window (default True).
         :param slowRun: If to execute the commands with delay (default True).
+        :param timeout: The timeout between each command (default 5 sec).
         """
 
         self.maximized = maximized
         self.headless = headless
         self.slowRun = slowRun
+        self.timeout = timeout
 
         if self.headless:
             from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -219,6 +226,7 @@ class FirefoxBrowser(BaseBrowser):
             self.driver = webdriver.Firefox(
                 executable_path='/usr/local/bin/geckodriver')
 
-        BaseBrowser.__init__(self, self.driver, maximized, headless, slowRun)
+        BaseBrowser.__init__(self, self.driver, maximized,
+                             headless, slowRun, timeout)
 
         self.setup_driver()

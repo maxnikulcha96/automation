@@ -21,7 +21,7 @@ class IDFPikadon(Website):
             "phone_number_input": (By.ID, "phone"),
             "submit_button": (By.ID, "login_btn"),
             "code_input": (By.ID, "otppswd"),
-            "submit_code_button" : (By.ID, "submitSms"),
+            "submit_code_button": (By.ID, "submitSms"),
             "pikadon_amount_div": (By.CLASS_NAME, "DepositBalanceText"),
         }
 
@@ -33,7 +33,7 @@ class IDFPikadon(Website):
 
     def fill_phone_number(self, number):
         self.browser.write_text(self.locators["phone_number_input"], number)
-        print("Filled phone number: {0}".format(number))  
+        print("Filled phone number: {0}".format(number))
 
     def click_submit_button(self):
         self.browser.click(self.locators["submit_button"])
@@ -48,10 +48,14 @@ class IDFPikadon(Website):
         print("Clicked submit code button")
 
     def open_pikadon_ampunt_page(self):
-        self.browser.load_url("https://www.hachvana.mod.gov.il/OnlineService/Pages/DepositsPayments.aspx")
+        self.browser.load_url(
+            "https://www.hachvana.mod.gov.il/OnlineService/Pages/DepositsPayments.aspx")
 
     def get_pikadon_amount(self):
         return self.browser.get_element_text(self.locators["pikadon_amount_div"])
+
+    def login(self):
+        super().login()
 
     def logout(self):
         super().logout()

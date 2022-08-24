@@ -40,7 +40,10 @@ class MigdalPensionPlan(Website):
     def get_pension_amount(self):
         return self.browser.get_element_text(self.locators["pension_amount_div"])
 
+    def login(self):
+        super().login()
+
     def logout(self):
         super().logout()
-        
+
         self.browser.execute_script("authenticatedUser.logout()")
