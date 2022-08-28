@@ -150,7 +150,7 @@ class BaseBrowser(ABC):
         :param script: The script to execute.
         """
 
-        self.driver.driver.execute_script(script)
+        self.driver.execute_script(script)
 
         print("Executed script: {0}".format(script))
 
