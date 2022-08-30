@@ -31,6 +31,8 @@ def test():
 def tearDown():
     website.logout()
 
+    browser.close()
+
     print("------------------------------------------------")
 
 
