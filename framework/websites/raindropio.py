@@ -9,7 +9,7 @@ class RaindropIO(Website):
         """
         Initializes a new RaindropIO instance.
 
-        :param browser: The browser conncetion.
+        :param browser: The browser instance.
         :param url: The URL of the website.
         """
 
@@ -44,7 +44,7 @@ class RaindropIO(Website):
 
     def go_back_to_main_page(self):
         self.browser.load_url(self.url)
-        
+
     def login(self):
         super().login()
 
@@ -56,5 +56,3 @@ class RaindropIO(Website):
 
         self.browser.click(self.locators["logout_a"])
         print("Clicked logout button")
-
-

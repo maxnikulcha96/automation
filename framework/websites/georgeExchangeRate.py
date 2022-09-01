@@ -11,7 +11,7 @@ class GeorgeExchangeRate(Website):
         """
         Initializes a new GeorgeExchangeRate instance.
 
-        :param browser: The browser conncetion.
+        :param browser: The browser instance.
         :param url: The URL of the website.
         """
 

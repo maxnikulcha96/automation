@@ -10,7 +10,7 @@ class KerenHishtalmut(Website):
         """
         Initializes a new KerenHishtalmut instance.
 
-        :param browser: The browser conncetion.
+        :param browser: The browser instance.
         :param url: The URL of the website.
         """
 
