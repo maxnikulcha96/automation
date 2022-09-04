@@ -2,35 +2,28 @@
 
 from framework.web.browsers import FirefoxBrowser
 from framework.websites.austriaEntryRequirements import AustriaEntryRequirements
+from tests.baseTest import BaseTest
 
 
 def setUp():
-    global browser, website
+    global browser, website, baseTest
 
     browser = FirefoxBrowser()
     website = AustriaEntryRequirements(browser)
 
+    baseTest = BaseTest(browser, website)
+
 
 def get_entry_requirements():
-    website.load()
-
     website.accept_cookies()
-
     website.get_entry_requirements()
-
-
-def tearDown():
-    website.logout()
-
-    browser.close()
-
-    print("------------------------------------------------")
 
 
 def main():
     setUp()
+    baseTest.load()
     get_entry_requirements()
-    tearDown()
+    baseTest.tearDown()
 
 
 if __name__ == "__main__":

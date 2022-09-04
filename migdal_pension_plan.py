@@ -4,22 +4,23 @@ import sys
 from framework.web.browsers import FirefoxBrowser
 from framework.websites.migdalPensionPlan import MigdalPensionPlan
 from framework.checkers.checkers import BaseWebsiteChecker
+from tests.baseTest import BaseTest
 
 
 def setUp():
-    global browser, website, checker
+    global browser, website, checker, baseTest
 
     browser = FirefoxBrowser()
     website = MigdalPensionPlan(browser)
     checker = BaseWebsiteChecker(website)
+
+    baseTest = BaseTest(browser, website)
 
     global israel_id
     israel_id = str(sys.argv[1])
 
 
 def get_pension_amount():
-    website.load()
-
     checker.check_title("כניסה למגדל שלי")
 
     website.fill_israel_id(israel_id)
@@ -33,18 +34,11 @@ def get_pension_amount():
     print("The pension amount is :{0}".format(amount))
 
 
-def tearDown():
-    website.logout()
-
-    browser.close()
-
-    print("------------------------------------------------")
-
-
 def main():
     setUp()
+    baseTest.load()
     get_pension_amount()
-    tearDown()
+    baseTest.tearDown()
 
 
 if __name__ == "__main__":

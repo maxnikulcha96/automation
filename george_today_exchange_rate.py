@@ -1,21 +1,21 @@
 #!/usr/bin/python
 
 from datetime import datetime
-from webbrowser import get
 from framework.web.browsers import FirefoxBrowser
 from framework.websites.georgeExchangeRate import GeorgeExchangeRate
+from tests.baseTest import BaseTest
 
 
 def setUp():
-    global browser, website
+    global browser, website, baseTest
 
     browser = FirefoxBrowser()
     website = GeorgeExchangeRate(browser)
 
+    baseTest = BaseTest(browser, website)
+
 
 def get_exchange_rate():
-    website.load()
-
     website.accept_only_essential_cookies()
 
     exchange_rate = website.get_today_exchange_rate()
@@ -25,16 +25,11 @@ def get_exchange_rate():
           .format(today, exchange_rate))
 
 
-def tearDown():
-    browser.close()
-
-    print("------------------------------------------------")
-
-
 def main():
     setUp()
+    baseTest.load()
     get_exchange_rate()
-    tearDown()
+    baseTest.tearDown()
 
 
 if __name__ == "__main__":

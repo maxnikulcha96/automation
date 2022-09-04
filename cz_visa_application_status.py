@@ -5,14 +5,17 @@ import sys
 from framework.checkers.checkers import BaseWebsiteChecker
 from framework.web.browsers import FirefoxBrowser
 from framework.websites.moiApplicationStatus import MoiApplicationStatus
+from tests.baseTest import BaseTest
 
 
 def setUp():
-    global browser, website, checker
+    global browser, website, checker, baseTest
 
     browser = FirefoxBrowser()
     website = MoiApplicationStatus(browser)
     checker = BaseWebsiteChecker(website)
+
+    baseTest = BaseTest(browser, website)
 
     global person_name, application_number, application_type, application_year, screenshot_path
     person_name = str(sys.argv[1])
@@ -23,8 +26,6 @@ def setUp():
 
 
 def get_application_status():
-    website.load()
-
     checker.check_title(
         "Informace o stavu řízení | Internetové objednávání pro cizince")
 
@@ -42,16 +43,11 @@ def get_application_status():
         screenshot_path, person_name, application_number, application_type, application_year, status, datetime.now()))
 
 
-def tearDown():
-    browser.close()
-
-    print("------------------------------------------------")
-
-
 def main():
     setUp()
+    baseTest.load()
     get_application_status()
-    tearDown()
+    baseTest.tearDown()
 
 
 if __name__ == "__main__":
