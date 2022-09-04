@@ -9,7 +9,7 @@ class Website(ABC):
         """
         Initializes a new Website instance.
 
-        :param browser: The browser conncetion.
+        :param browser: The browser instance.
         :param url: The URL of the website.
         """
 

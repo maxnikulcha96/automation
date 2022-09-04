@@ -6,35 +6,20 @@ from selenium import webdriver
 
 
 class BaseBrowser(ABC):
-    def __init__(self, driver, maximized=False, headless=True, slowRun=True, timeout=5):
+    def __init__(self, driver, maximized=False, headless=True, timeout=30):
         """
         Initializes a new BaseBrowser instance.
 
         :param driver: The selenium webdriver connection.
         :param maximized: If to maximize the browser window (default False).
         :param headless: If to hide the browser window (default True).
-        :param slowRun: If to execute the commands with delay (default True).
         :param timeout: The timeout between each command (default 5 sec).
         """
 
         self.driver = driver
         self.maximized = maximized
         self.headless = headless
-        self.slowRun = slowRun
         self.timeout = timeout
-
-    def check_slow_run(self):
-        if self.slowRun:
-            from time import sleep
-
-            sleep(self.timeout)
-
-    def setup_driver(self):
-        """
-        Setups and configures the webdriver.
-        """
-
-        self.driver.implicitly_wait(10)
 
         if self.maximized:
             self.driver.maximize_window()
@@ -57,7 +42,15 @@ class BaseBrowser(ABC):
         :param locator: The locator of the web element.
         """
 
-        return self.driver.find_element(*locator)
+        from selenium.webdriver.support.ui import WebDriverWait
+        from selenium.webdriver.support import expected_conditions as EC
+        from selenium.common.exceptions import TimeoutException
+
+        try:
+            return WebDriverWait(self.driver, self.timeout).until(
+                EC.visibility_of_element_located(locator))
+        except TimeoutException:
+            print("The element with locator:'{}' was not found".format(locator))
 
     def get_title(self):
         """
@@ -84,8 +77,6 @@ class BaseBrowser(ABC):
         :param text: The text to write.
         """
 
-        self.check_slow_run()
-
         element = self.find_element(locator)
         element.send_keys(text)
 
@@ -95,8 +86,6 @@ class BaseBrowser(ABC):
 
         :param locator: The locator of the web element.
         """
-
-        self.check_slow_run()
 
         element = self.find_element(locator)
 
@@ -112,8 +101,6 @@ class BaseBrowser(ABC):
         :param locator: The locator of the web element.
         """
 
-        self.check_slow_run()
-
         element = self.find_element(locator)
         element.click()
 
@@ -126,8 +113,6 @@ class BaseBrowser(ABC):
         """
 
         from selenium.webdriver.support.select import Select
-
-        self.check_slow_run()
 
         sel = Select(self.driver.find_element(*locator))
         sel.select_by_visible_text(value)
@@ -159,24 +144,23 @@ class BaseBrowser(ABC):
         Closes the web browser.
         """
 
+        self.driver.close()
         self.driver.quit()
 
 
 class SafariBrowser(BaseBrowser):
-    def __init__(self, maximized=False, headless=True, slowRun=True, timeout=5):
+    def __init__(self, maximized=False, headless=True, timeout=5):
         """
         Initializes a new SafariBrowser instance.
 
         :param driver: The selenium webdriver connection.
         :param maximized: If to maximize the browser window (default False).
         :param headless: If to hide the browser window (default True).
-        :param slowRun: If to execute the commands with delay (default True).
         :param timeout: The timeout between each command (default 5 sec).
         """
 
         self.maximized = maximized
         self.headless = headless
-        self.slowRun = slowRun
         self.timeout = timeout
 
         if self.headless:
@@ -186,34 +170,25 @@ class SafariBrowser(BaseBrowser):
             self.driver = webdriver.Safari()
 
         BaseBrowser.__init__(self, self.driver, maximized,
-                             headless, slowRun, timeout)
-
-        self.setup_driver()
-
-    def setup_driver(self):
-        """
-        Setups and configures the webdriver.
-        """
-
-        BaseBrowser.setup_driver(self)
+                             headless, timeout)
 
 
 class FirefoxBrowser(BaseBrowser):
-    def __init__(self, maximized=False, headless=True, slowRun=True, timeout=5):
+    def __init__(self, maximized=False, headless=True, timeout=5):
         """
         Initializes a new FirefoxBrowser instance.
 
         :param driver: The selenium webdriver connection.
         :param maximized: If to maximize the browser window (default False).
         :param headless: If to hide the browser window (default True).
-        :param slowRun: If to execute the commands with delay (default True).
         :param timeout: The timeout between each command (default 5 sec).
         """
 
         self.maximized = maximized
         self.headless = headless
-        self.slowRun = slowRun
         self.timeout = timeout
+
+        geckodriver_path = '/usr/local/bin/geckodriver'
 
         if self.headless:
             from selenium.webdriver.firefox.options import Options as FirefoxOptions
@@ -221,12 +196,10 @@ class FirefoxBrowser(BaseBrowser):
             options = FirefoxOptions()
             options.add_argument("--headless")
             self.driver = webdriver.Firefox(
-                options=options, executable_path='/usr/local/bin/geckodriver')
+                options=options, executable_path=geckodriver_path)
         else:
             self.driver = webdriver.Firefox(
-                executable_path='/usr/local/bin/geckodriver')
+                executable_path=geckodriver_path)
 
         BaseBrowser.__init__(self, self.driver, maximized,
-                             headless, slowRun, timeout)
-
-        self.setup_driver()
+                             headless, timeout)
