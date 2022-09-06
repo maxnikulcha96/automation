@@ -29,13 +29,8 @@ def get_application_status():
     checker.check_title(
         "Informace o stavu řízení | Internetové objednávání pro cizince")
 
-    website.fill_application_details(
+    status = website.get_application_status(
         application_number, application_type, application_year)
-
-    website.click_submit_button()
-
-    status = website.get_result_status()
-
     print("{0}, the status of your application 'OAM-{1}/{2}-{3}' is '{4}'".format(
         person_name, application_number, application_type, application_year, status))
 

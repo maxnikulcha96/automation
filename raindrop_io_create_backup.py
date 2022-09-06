@@ -22,11 +22,7 @@ def setUp():
 def create_backup():
     website.login_website(email, password)
 
-    website.open_backups_page()
-
-    website.click_create_new_backup()
-
-    website.go_back_to_main_page()
+    website.create_backup()
 
 
 def main():

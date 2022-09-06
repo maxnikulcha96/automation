@@ -35,15 +35,20 @@ class RaindropIO(Website):
         self.browser.click(self.locators["login_signin_input_button"])
         print("Clicked sign in button")
 
-    def open_backups_page(self):
+    def __open_backups_page(self):
         self.browser.load_url("https://app.raindrop.io/settings/backups")
 
-    def click_create_new_backup(self):
+    def __click_create_new_backup(self):
         self.browser.click(self.locators["create_new_backup_div"])
         print("Clicked create new backup button")
 
-    def go_back_to_main_page(self):
+    def __go_back_to_main_page(self):
         self.browser.load_url(self.url)
+
+    def create_backup(self):
+        self.__open_backups_page()
+        self.__click_create_new_backup()
+        self.__go_back_to_main_page()
 
     def login(self):
         super().login()

@@ -15,7 +15,6 @@ def setUp():
 
 
 def get_entry_requirements():
-    website.accept_cookies()
     website.get_entry_requirements()
 
 

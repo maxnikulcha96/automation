@@ -16,8 +16,6 @@ def setUp():
 
 
 def get_exchange_rate():
-    website.accept_only_essential_cookies()
-
     exchange_rate = website.get_today_exchange_rate()
 
     today = datetime.today().strftime('%Y-%m-%d')

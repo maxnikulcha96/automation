@@ -25,15 +25,17 @@ class AustriaEntryRequirements(Website):
 
         Website.__init__(self, browser, self.url)
 
-    def accept_cookies(self):
+    def __accept_cookies(self):
         try:
             self.browser.click(self.locators["disclaimer_label"])
             self.browser.click(self.locators["accept_cookies_button"])
-            print("Clicked accept essential cookies only")
+            print("Clicked 'accept essential cookies' only")
         except NoSuchElementException:
             print("Unable to accept cookies")
 
     def get_entry_requirements(self):
+        self.__accept_cookies()
+
         self.browser.click(self.locators["download_file_a"])
         print("Downloaded entry requirements file")
 

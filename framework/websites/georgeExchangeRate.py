@@ -27,7 +27,7 @@ class GeorgeExchangeRate(Website):
 
         Website.__init__(self, browser, self.url)
 
-    def accept_only_essential_cookies(self):
+    def __accept_cookies(self):
         try:
             self.browser.click(self.locators["only_essential_cookies_button"])
             print("Clicked accept essential cookies only")
@@ -35,6 +35,8 @@ class GeorgeExchangeRate(Website):
             print("Unable to locate element: #popin_tc_privacy_button_2")
 
     def get_today_exchange_rate(self):
+        self.__accept_cookies()
+
         return self.browser.get_element_text(self.locators["today_exchange_rate_td"])
 
     def login(self):
