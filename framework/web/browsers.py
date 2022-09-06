@@ -104,18 +104,31 @@ class BaseBrowser(ABC):
         element = self.find_element(locator)
         element.click()
 
-    def select_value_from_dropdown(self, locator, value):
+    def select_item_from_dropdown_by_text(self, locator, value):
         """
-        Selects a specific value from the dropdown.
+        Selects a specific item from the dropdown by text.
 
         :param locator: The locator of the web element.
-        :param value: The value to select.
+        :param value: The item to select.
         """
 
         from selenium.webdriver.support.select import Select
 
         sel = Select(self.driver.find_element(*locator))
         sel.select_by_visible_text(value)
+
+    def select_item_from_dropdown_by_value(self, locator, value):
+        """
+        Selects a specific item from the dropdown by value.
+
+        :param locator: The locator of the web element.
+        :param value: The item to select.
+        """
+
+        from selenium.webdriver.support.select import Select
+
+        sel = Select(self.driver.find_element(*locator))
+        sel.select_by_value(value)
 
     def take_screenshot(self, filename):
         """

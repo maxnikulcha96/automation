@@ -31,11 +31,11 @@ class MoiApplicationStatus(Website):
             self.locators["application_number_input"], number)
         print("Filled application number: {}".format(number))
 
-        self.browser.select_value_from_dropdown(
+        self.browser.select_item_from_dropdown_by_text(
             self.locators["application_type_selectbox"], type)
         print("Choosen application type : {}".format(type))
 
-        self.browser.select_value_from_dropdown(
+        self.browser.select_item_from_dropdown_by_text(
             self.locators["application_year"], year)
         print("Choosen application year : {}".format(year))
 
