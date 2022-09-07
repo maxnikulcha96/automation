@@ -2,16 +2,13 @@
 
 from framework.web.browsers import FirefoxBrowser
 from framework.websites.prekladac import Prekladac
-from tests.baseTest import BaseTest
 
 
 def setUp():
-    global browser, website, baseTest
+    global browser, website
 
     browser = FirefoxBrowser()
     website = Prekladac(browser)
-
-    baseTest = BaseTest(browser, website)
 
 
 def translate_text():
@@ -25,9 +22,9 @@ def translate_text():
 
 def main():
     setUp()
-    baseTest.load()
+    website.load()
     translate_text()
-    baseTest.tearDown()
+    browser.close()
 
 
 if __name__ == "__main__":

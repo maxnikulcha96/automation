@@ -5,17 +5,14 @@ import sys
 from framework.checkers.checkers import BaseWebsiteChecker
 from framework.web.browsers import FirefoxBrowser
 from framework.websites.moiApplicationStatus import MoiApplicationStatus
-from tests.baseTest import BaseTest
 
 
 def setUp():
-    global browser, website, checker, baseTest
+    global browser, website, checker
 
     browser = FirefoxBrowser()
     website = MoiApplicationStatus(browser)
     checker = BaseWebsiteChecker(website)
-
-    baseTest = BaseTest(browser, website)
 
     global person_name, application_number, application_type, application_year, screenshot_path
     person_name = str(sys.argv[1])
@@ -40,9 +37,9 @@ def get_application_status():
 
 def main():
     setUp()
-    baseTest.load()
+    website.load()
     get_application_status()
-    baseTest.tearDown()
+    browser.close()
 
 
 if __name__ == "__main__":

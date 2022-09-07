@@ -29,19 +29,3 @@ class Website(ABC):
         """
 
         return self.browser.get_title()
-
-    @abc.abstractmethod
-    def login(self):
-        """
-        Login the website.
-        """
-
-        pass
-
-    @abc.abstractmethod
-    def logout(self):
-        """
-        Logout the website.
-        """
-
-        pass

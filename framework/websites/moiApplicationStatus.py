@@ -47,13 +47,8 @@ class MoiApplicationStatus(Website):
         return self.browser.get_element_text(self.locators["result_status_span"])
 
     def get_application_status(self, application_number, application_type, application_year):
-        self.__fill_application_details(application_number, application_type, application_year)
+        self.__fill_application_details(
+            application_number, application_type, application_year)
         self.__click_submit_button()
 
         return self.__get_result_status()
-
-    def login(self):
-        super().login()
-
-    def logout(self):
-        super().logout()

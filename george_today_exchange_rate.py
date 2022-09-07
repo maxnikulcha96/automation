@@ -3,16 +3,13 @@
 from datetime import datetime
 from framework.web.browsers import FirefoxBrowser
 from framework.websites.georgeExchangeRate import GeorgeExchangeRate
-from tests.baseTest import BaseTest
 
 
 def setUp():
-    global browser, website, baseTest
+    global browser, website
 
     browser = FirefoxBrowser()
     website = GeorgeExchangeRate(browser)
-
-    baseTest = BaseTest(browser, website)
 
 
 def get_exchange_rate():
@@ -25,9 +22,9 @@ def get_exchange_rate():
 
 def main():
     setUp()
-    baseTest.load()
+    website.load()
     get_exchange_rate()
-    baseTest.tearDown()
+    browser.close()
 
 
 if __name__ == "__main__":

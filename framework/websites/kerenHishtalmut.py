@@ -34,19 +34,20 @@ class KerenHishtalmut(Website):
 
         Website.__init__(self, browser, self.url)
 
-    def fill_israel_id(self, id):
+    def __fill_israel_id(self, id):
         self.browser.write_text(self.locators["israel_id_input"], id)
         print("Filled Israel ID: {0}".format(id))
 
-    def fill_phone_number(self, number):
+    def __fill_phone_number(self, number):
         self.browser.write_text(self.locators["phone_number"], number)
         print("Filled phone number: {0}".format(number))
 
-    def click_submit_button(self):
+    def __click_submit_button(self):
         self.browser.click(self.locators["submit_button"])
         print("Clicked submit button")
 
-    def fill_code(self, code):
+    def __fill_code(self):
+        code = input("Enter code:")
         self.browser.write_text(
             self.locators["code_first_digit_unput"], code[0:1])
         self.browser.write_text(
@@ -62,20 +63,30 @@ class KerenHishtalmut(Website):
 
         print("Filled code: {0}".format(code))
 
-    def click_disapproval_button(self):
+    def __click_disapproval_button(self):
         try:
             self.browser.click(self.locators["disapproval_button"])
             print("Clicked disapproval button")
         except NoSuchElementException:
             print("Unable to locate element: .disapproval-button")
 
+    def login(self, id, phone):
+        """
+        Login the website.
+
+        :param id: The login id.
+        :param phone: The login phone number.
+        """
+
+        self.__fill_israel_id(id)
+        self.__fill_phone_number(phone)
+        self.__click_submit_button()
+        self.__fill_code()
+        self.__click_submit_button()
+        self.__click_disapproval_button()
+
     def get_keren_amount(self):
         return self.browser.get_element_text(self.locators["total_amount_div"])
 
-    def login(self):
-        super().login()
-
     def logout(self):
-        super().logout()
-
         self.browser.click(self.locators["logout_span"])

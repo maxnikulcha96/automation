@@ -66,9 +66,3 @@ class Prekladac(Website):
         sleep(5)
 
         return self.__get_translation()
-
-    def login(self):
-        super().login()
-
-    def logout(self):
-        super().logout()

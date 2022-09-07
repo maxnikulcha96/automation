@@ -38,9 +38,3 @@ class GeorgeExchangeRate(Website):
         self.__accept_cookies()
 
         return self.browser.get_element_text(self.locators["today_exchange_rate_td"])
-
-    def login(self):
-        super().login()
-
-    def logout(self):
-        super().logout()

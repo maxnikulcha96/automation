@@ -25,25 +25,33 @@ class MigdalPensionPlan(Website):
 
         Website.__init__(self, browser, self.url)
 
-    def fill_israel_id(self, id):
+    def __fill_israel_id(self, id):
         self.browser.write_text(self.locators["israel_id_input"], id)
         print("Filled Israel ID: {0}".format(id))
 
-    def click_submit_button(self):
+    def __click_submit_button(self):
         self.browser.click(self.locators["submit_button"])
         print("Clicked submit button")
 
-    def fill_code(self, code):
+    def __fill_code(self):
+        code = input("Enter code:")
         self.browser.write_text(self.locators["code_input"], code)
         print("Filled code: {0}".format(code))
+
+    def login(self, id):
+        """
+        Login the website.
+
+        :param id: The login id.
+        """
+
+        self.__fill_israel_id(id)
+        self.__click_submit_button()
+        self.__fill_code()
+        self.__click_submit_button()
 
     def get_pension_amount(self):
         return self.browser.get_element_text(self.locators["pension_amount_div"])
 
-    def login(self):
-        super().login()
-
     def logout(self):
-        super().logout()
-
         self.browser.execute_script("authenticatedUser.logout()")

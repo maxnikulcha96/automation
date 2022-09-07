@@ -26,11 +26,20 @@ class Sodexo(Website):
 
         Website.__init__(self, browser, self.url)
 
-    def accept_cookies(self):
+    def __accept_cookies(self):
         self.browser.click(self.locators["accept_all_cookies_button"])
         print("Clicked 'accept all cookies' button")
 
-    def login_website(self, email, password):
+    def login(self, email, password):
+        """
+        Login the website.
+
+        :param email: The login email.
+        :param password: The login password.
+        """
+
+        self.__accept_cookies()
+
         self.browser.write_text(self.locators["login_email_input"], email)
         self.browser.write_text(
             self.locators["login_password_input"], password)
@@ -40,9 +49,3 @@ class Sodexo(Website):
 
     def get_balance(self):
         return self.browser.get_element_text(self.locators["balance_a"])
-
-    def login(self):
-        super().login()
-
-    def logout(self):
-        super().logout()

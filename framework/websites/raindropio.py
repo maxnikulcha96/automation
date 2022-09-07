@@ -27,14 +27,6 @@ class RaindropIO(Website):
 
         Website.__init__(self, browser, self.url)
 
-    def login_website(self, email, password):
-        self.browser.write_text(self.locators["login_email_input"], email)
-        self.browser.write_text(
-            self.locators["login_password_input"], password)
-
-        self.browser.click(self.locators["login_signin_input_button"])
-        print("Clicked sign in button")
-
     def __open_backups_page(self):
         self.browser.load_url("https://app.raindrop.io/settings/backups")
 
@@ -45,17 +37,27 @@ class RaindropIO(Website):
     def __go_back_to_main_page(self):
         self.browser.load_url(self.url)
 
+    def login(self, email, password):
+        """
+        Login the website.
+
+        :param email: The login email.
+        :param password: The login password.
+        """
+
+        self.browser.write_text(self.locators["login_email_input"], email)
+        self.browser.write_text(
+            self.locators["login_password_input"], password)
+
+        self.browser.click(self.locators["login_signin_input_button"])
+        print("Clicked sign in button")
+
     def create_backup(self):
         self.__open_backups_page()
         self.__click_create_new_backup()
         self.__go_back_to_main_page()
 
-    def login(self):
-        super().login()
-
     def logout(self):
-        super().logout()
-
         self.browser.click(self.locators["menu_button"])
         print("Clicked menu button")
 

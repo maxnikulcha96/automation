@@ -38,9 +38,3 @@ class AustriaEntryRequirements(Website):
 
         self.browser.click(self.locators["download_file_a"])
         print("Downloaded entry requirements file")
-
-    def login(self):
-        super().login()
-
-    def logout(self):
-        super().logout()

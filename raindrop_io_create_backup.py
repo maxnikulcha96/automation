@@ -3,16 +3,13 @@
 import sys
 from framework.web.browsers import FirefoxBrowser
 from framework.websites.raindropio import RaindropIO
-from tests.baseTest import BaseTest
 
 
 def setUp():
-    global browser, website, baseTest
+    global browser, website
 
     browser = FirefoxBrowser()
     website = RaindropIO(browser)
-
-    baseTest = BaseTest(browser, website)
 
     global email, password
     email = str(sys.argv[1])
@@ -20,16 +17,16 @@ def setUp():
 
 
 def create_backup():
-    website.login_website(email, password)
-
     website.create_backup()
 
 
 def main():
     setUp()
-    baseTest.load()
+    website.load()
+    website.login(email, password)
     create_backup()
-    baseTest.tearDown()
+    website.logout()
+    browser.close()
 
 
 if __name__ == "__main__":

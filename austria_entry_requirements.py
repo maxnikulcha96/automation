@@ -2,16 +2,13 @@
 
 from framework.web.browsers import FirefoxBrowser
 from framework.websites.austriaEntryRequirements import AustriaEntryRequirements
-from tests.baseTest import BaseTest
 
 
 def setUp():
-    global browser, website, baseTest
+    global browser, website
 
     browser = FirefoxBrowser()
     website = AustriaEntryRequirements(browser)
-
-    baseTest = BaseTest(browser, website)
 
 
 def get_entry_requirements():
@@ -20,9 +17,9 @@ def get_entry_requirements():
 
 def main():
     setUp()
-    baseTest.load()
+    website.load()
     get_entry_requirements()
-    baseTest.tearDown()
+    browser.close()
 
 
 if __name__ == "__main__":
