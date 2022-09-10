@@ -49,6 +49,9 @@ class MoiApplicationStatus(Website):
     def get_application_status(self, application_number, application_type, application_year):
         self.__fill_application_details(
             application_number, application_type, application_year)
+
+        self.browser.wait(3)
+
         self.__click_submit_button()
 
         return self.__get_result_status()

@@ -141,6 +141,16 @@ class BaseBrowser(ABC):
 
         print("Screenshot saved into: {0}".format(filename))
 
+    def wait(self, seconds):
+        """
+        Delays the execution of the next action for a given number of seconds.
+
+        :param seconds: The number of seconds to wait.
+        """
+
+        from time import sleep
+        sleep(seconds)
+
     def execute_script(self, script):
         """
         Executes a JavaScript code on the browser.
@@ -162,7 +172,7 @@ class BaseBrowser(ABC):
 
 
 class SafariBrowser(BaseBrowser):
-    def __init__(self, maximized=False, headless=True, timeout=5):
+    def __init__(self, maximized=False, headless=True, timeout=30):
         """
         Initializes a new SafariBrowser instance.
 
@@ -187,7 +197,7 @@ class SafariBrowser(BaseBrowser):
 
 
 class FirefoxBrowser(BaseBrowser):
-    def __init__(self, maximized=False, headless=True, timeout=5):
+    def __init__(self, maximized=False, headless=True, timeout=30):
         """
         Initializes a new FirefoxBrowser instance.
 
