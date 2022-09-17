@@ -21,7 +21,7 @@ class MoiApplicationStatus(Website):
             "application_type_selectbox": (By.ID, 'edit-ioff-application-code'),
             "application_year": (By.ID, 'edit-ioff-application-year'),
             "submit_button": (By.ID, 'edit-submit-button'),
-            "result_status_span": (By.XPATH, '//span[contains(@class,"alert alert-warning")]//strong')
+            "result_status_span": (By.XPATH, '//span[@class="alert alert-success" or @class="alert alert-warning" or @class="alert alert-danger"]//strong')
         }
 
         Website.__init__(self, browser, self.url)
