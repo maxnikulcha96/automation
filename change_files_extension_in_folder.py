@@ -7,8 +7,6 @@ import os
 def setUp():
     global dir, extension
 
-    # dir = '/Users/maximnikulcha/Downloads/gifs/'
-    # extension = '.gif'
     dir = str(sys.argv[1])
     extension = str(sys.argv[2])
 
