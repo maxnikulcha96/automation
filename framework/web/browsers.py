@@ -3,6 +3,9 @@
 from abc import ABC
 from sqlite3 import NotSupportedError
 from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 
 class BaseBrowser(ABC):
@@ -42,15 +45,24 @@ class BaseBrowser(ABC):
         :param locator: The locator of the web element.
         """
 
-        from selenium.webdriver.support.ui import WebDriverWait
-        from selenium.webdriver.support import expected_conditions as EC
-        from selenium.common.exceptions import TimeoutException
-
         try:
             return WebDriverWait(self.driver, self.timeout).until(
                 EC.visibility_of_element_located(locator))
         except TimeoutException:
             print("The element with locator:'{}' was not found".format(locator))
+
+    def find_elements(self, locator):
+        """
+       Finds and returns a list of web elements by the given locator.
+
+       :param locator: The locator of the web element.
+       """
+
+        try:
+            return WebDriverWait(self.driver, self.timeout).until(
+                EC.visibility_of_all_elements_located(locator))
+        except TimeoutException:
+            print("Element with locator:'{0}' were not found".format(locator))
 
     def get_title(self):
         """
@@ -101,8 +113,15 @@ class BaseBrowser(ABC):
         :param locator: The locator of the web element.
         """
 
-        element = self.find_element(locator)
-        element.click()
+        # element = self.find_element(locator)
+        # element.click()
+
+        try:
+            WebDriverWait(self.driver, self.timeout).until(
+                EC.element_to_be_clickable(locator)).click()
+        except TimeoutException:
+            print(
+                "The element with locator:'{0}' is not clickable".format(locator))
 
     def select_item_from_dropdown_by_text(self, locator, value):
         """
@@ -147,6 +166,8 @@ class BaseBrowser(ABC):
 
         :param seconds: The number of seconds to wait.
         """
+
+        print("Waiting {0} seconds.".format(seconds))
 
         from time import sleep
         sleep(seconds)

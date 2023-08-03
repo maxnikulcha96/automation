@@ -16,12 +16,17 @@ class MoiApplicationStatus(Website):
         self.browser = browser
         self.url = "https://frs.gov.cz/cs/ioff/application-status"
 
+        success_class = "alert alert-success"
+        warning_class = "alert alert-warning"
+        alert_class = "alert alert-danger"
+
         self.locators = {
             "application_number_input": (By.ID, 'edit-ioff-application-number'),
             "application_type_selectbox": (By.ID, 'edit-ioff-application-code'),
             "application_year": (By.ID, 'edit-ioff-application-year'),
             "submit_button": (By.ID, 'edit-submit-button'),
-            "result_status_span": (By.XPATH, '//span[@class="alert alert-success" or @class="alert alert-warning" or @class="alert alert-danger"]//strong')
+            "result_status_span": (By.XPATH, '//span[@class="{0}" or @class="{1}" or @class="{2}"]//strong'
+                                   .format(success_class, warning_class, alert_class))
         }
 
         Website.__init__(self, browser, self.url)
