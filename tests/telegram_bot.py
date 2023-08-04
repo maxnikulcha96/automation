@@ -21,7 +21,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     browser.close()
 
 if __name__ == '__main__':
-    application = ApplicationBuilder().token('6657932574:AAHK0j9Gsl4HtqAo7rKfeTwLc7QAI7dpbvs').build()
+    application = ApplicationBuilder().token('').build()
     
     start_handler = CommandHandler('start', start)
     application.add_handler(start_handler)
